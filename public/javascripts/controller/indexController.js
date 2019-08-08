@@ -1,10 +1,20 @@
 app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory) => {
 
     $scope.init = () => {
-        const username = prompt('Please enter username');
 
-        if(username)
+        var n = 0, msg = 'Please enter username (Maximum limit 20)'
+        let username;
+        do {
+            n++;
+            if(n > 1) msg = "You had too many characters! \nPlease enter username (Maximum limit 20).";
+            username = prompt(msg, "Name");
+        
+        }
+        while (username.length > 20)
+
+        if(username){
             initSocket(username);
+        }
         else
             return false
     };
