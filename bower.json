@@ -1,0 +1,14 @@
+{
+  "name": "live-balls-socket.io",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Alper <31041738+4ppe@users.noreply.github.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/4ppe/live-balls-socket.io",
+  "dependencies": {
+    "angular": "^1.7.8",
+    "semantic": "^2.4.1"
+  }
+}
