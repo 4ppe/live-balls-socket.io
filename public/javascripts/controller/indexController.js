@@ -30,13 +30,28 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                 socket.emit('newUser', { username });
                 socket.on('newUser',(data)=> {
                     const messageData = {
-                        type: 0, // info
+                        type: {
+                            code: 0, // server(0) or user message(1)
+                            message: 1 // disconnect message(0) or login(1)
+                        },
                         username: data.username
                     };
 
                     $scope.messages.push(messageData);
                     $scope.$apply();
                 });
+
+                socket.on('disUser', (user) => {
+                    const messageData = {
+                        type: {
+                            code: 0,
+                            message: 0
+                        }, // info
+                        username: user.username
+                    };
+                    $scope.messages.push(messageData);
+                    $scope.$apply();
+                })
             }).catch((err) => {
                 console.log(err);
         });
