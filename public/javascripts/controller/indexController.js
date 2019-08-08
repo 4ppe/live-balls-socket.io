@@ -5,7 +5,7 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
         reconnectionDelay: 600
     };
 
-    indexFactory.connectSocket('http://localhost:3001',connectionOptions)
+    indexFactory.connectSocket('http://localhost:3000',connectionOptions)
     .then((socket) => { 
         console.log('baglantı gerceklesti',socket);
     }).catch((err) => {
