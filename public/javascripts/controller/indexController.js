@@ -1,7 +1,8 @@
 app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory) => {
 
+    $scope.messages = [];
+    
     $scope.init = () => {
-
         var n = 0, msg = 'Please enter username (Maximum limit 20)'
         let username;
         do {
@@ -12,9 +13,8 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
         }
         while (username.length > 20)
 
-        if(username){
+        if(username)
             initSocket(username);
-        }
         else
             return false
     };
@@ -28,6 +28,15 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
         indexFactory.connectSocket('http://localhost:3000',connectionOptions)
             .then((socket) => { 
                 socket.emit('newUser', { username });
+                socket.on('newUser',(data)=> {
+                    const messageData = {
+                        type: 0, // info
+                        username: data.username
+                    };
+
+                    $scope.messages.push(messageData);
+                    $scope.$apply();
+                });
             }).catch((err) => {
                 console.log(err);
         });
