@@ -12,7 +12,7 @@ io.on('connection', (socket) => {
 
     socket.on('newUser',(data) => {
         const defaultData = {
-            //id: socket.id,
+            id: socket.id,
             position: {
                 x:0,
                 y:0
@@ -21,9 +21,9 @@ io.on('connection', (socket) => {
 
         const userData = Object.assign(data, defaultData);
         users[socket.id] = (userData);
-        console.log(users);
 
         socket.broadcast.emit('newUser', users[socket.id]);
+        socket.emit('initPlayers', users);
     });
 
     socket.on('disconnect', () => {
