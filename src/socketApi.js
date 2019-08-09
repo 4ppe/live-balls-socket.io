@@ -8,7 +8,7 @@ socketApi.io = io;
 const users = { };
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log('user connected');
 
     socket.on('newUser',(data) => {
         const defaultData = {
@@ -30,6 +30,19 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('disUser',users[socket.id]);
         delete users[socket.id];
     });
+
+    socket.on('animate',(data) => {
+        users[socket.id].position.x = data.x;
+        users[socket.id].position.y = data.y;
+
+        socket.broadcast.emit('animate',{
+             socketId: socket.id,
+             x: data.x,
+             y: data.y
+            })
+    })
+
+
 });
 
 module.exports = socketApi;
