@@ -61,7 +61,6 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                     $scope.$apply();   
                 });
 
-
                 socket.on('animate',data => {
                     $('#'+ data.socketId).animate({ 'left': data.x, 'top': data.y }, () => {
                         animate = false;
@@ -81,7 +80,25 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                             animate = false;
                         });
                     }
-                }; 
+                };
+
+                $scope.newMessage = () => {
+                    let message = $scope.message;
+                    const messageData = {
+                        type: {
+                            code:1
+                        }, 
+                        username,
+                        text: message
+                    };  
+
+                    if( messageData.text && messageData.text.length > 0 && messageData.text.length < 100 ) {
+                        $scope.messages.push(messageData);
+                    }else{
+                        alert("Please type something in the message input \nor \nType less than 100 characters ");
+                    }
+					$scope.message = null;
+                };
             }).catch((err) => {
                 console.log(err);
         });

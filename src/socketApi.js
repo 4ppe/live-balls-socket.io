@@ -7,6 +7,9 @@ socketApi.io = io;
 
 const users = { };
 
+// Helpers
+const randomColor = require('../helpers/randomColor');
+
 io.on('connection', (socket) => {
     console.log('user connected');
 
@@ -16,7 +19,8 @@ io.on('connection', (socket) => {
             position: {
                 x:0,
                 y:0
-            }
+            },
+            color: randomColor()
         };
 
         const userData = Object.assign(data, defaultData);
