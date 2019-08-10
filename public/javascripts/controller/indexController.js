@@ -26,6 +26,16 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
         });
     }
 
+    function showBubble(id, message) {
+        
+        $('#' + id).find('.message').show().html(message);
+
+        setTimeout(() => {
+            $('#' + id).find('.message').hide();
+        }, 2000);
+
+    }
+
     function initSocket(username) {
         const connectionOptions = {
             reconnectionAttempts: 3,
@@ -52,6 +62,7 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
 
                     $scope.messages.push(messageData);
                     $scope.players[data.id] = data ;
+                    scrollTop();
                     $scope.$apply();
                 });
 
@@ -65,6 +76,7 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                     };
                     $scope.messages.push(messageData);
                     delete $scope.players[user.id];
+                    scrollTop();
                     $scope.$apply();   
                 });
 
@@ -77,6 +89,7 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                 socket.on('newMessage', message => {
                     $scope.messages.push(message);
                     $scope.$apply();
+                    showBubble(message.socketId, message.text);
                     scrollTop();
                 });
                  
@@ -108,7 +121,8 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                     if( messageData.text && messageData.text.length > 0 && messageData.text.length < 100 ) {
 
                         $scope.messages.push(messageData); 
-                        socket.emit('newMessage', messageData)
+                        socket.emit('newMessage', messageData);
+                        showBubble(socket.id, message);
                         scrollTop();
 
                     }else{
