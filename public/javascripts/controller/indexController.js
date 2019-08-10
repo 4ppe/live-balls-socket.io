@@ -19,6 +19,13 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
             return false
     };
 
+    function scrollTop(){
+        setTimeout(() => {
+            const element = document.getElementById('chat-area');
+            element.scrollTop = element.scrollHeight;
+        });
+    }
+
     function initSocket(username) {
         const connectionOptions = {
             reconnectionAttempts: 3,
@@ -65,7 +72,13 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                     $('#'+ data.socketId).animate({ 'left': data.x, 'top': data.y }, () => {
                         animate = false;
                     });
-                })
+                });
+
+                socket.on('newMessage', message => {
+                    $scope.messages.push(message);
+                    $scope.$apply();
+                    scrollTop();
+                });
                  
                 let animate = false; // to wait for the next animation
                 $scope.onClickPlayer = ($event) => {
@@ -93,17 +106,18 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                     };  
 
                     if( messageData.text && messageData.text.length > 0 && messageData.text.length < 100 ) {
-                        $scope.messages.push(messageData);
+
+                        $scope.messages.push(messageData); 
+                        socket.emit('newMessage', messageData)
+                        scrollTop();
+
                     }else{
                         alert("Please type something in the message input \nor \nType less than 100 characters ");
                     }
                     $scope.message = null;
                     
                     
-                    setTimeout(() => {
-                        const element = document.getElementById('chat-area');
-                        element.scrollTop = element.scrollHeight;
-                    })
+
                 };
             }).catch((err) => {
                 console.log(err);
