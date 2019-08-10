@@ -1,6 +1,6 @@
 # SocketIO Live Balls
 
-[![Live demo on heroku]](https://socketio-live-balls--1.herokuapp.com/)
+[Live demo on heroku](https://socketio-live-balls--1.herokuapp.com/) :point_left:
 
 ## Local Installation
 Clone this repo and run commands below.
@@ -13,4 +13,4 @@ Clone this repo and run commands below.
 
 and go to [http://localhost:3000](http://localhost:3000)
 
-enjoy! :heart_eyes
+enjoy! :heart_eyes:
