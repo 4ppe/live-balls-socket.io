@@ -97,7 +97,13 @@ app.controller('indexController',['$scope','indexFactory', ($scope, indexFactory
                     }else{
                         alert("Please type something in the message input \nor \nType less than 100 characters ");
                     }
-					$scope.message = null;
+                    $scope.message = null;
+                    
+                    
+                    setTimeout(() => {
+                        const element = document.getElementById('chat-area');
+                        element.scrollTop = element.scrollHeight;
+                    })
                 };
             }).catch((err) => {
                 console.log(err);
